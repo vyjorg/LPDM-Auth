@@ -5,9 +5,11 @@ import com.lpdm.msauthentication.beans.enumeration.AccessEnum;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 @Entity
+@Table(name = "app_user", schema = "public")
 public class AppUser {
 
     @Id
@@ -25,8 +27,6 @@ public class AppUser {
     private String name;
     private String firstName;
 
-    private String address;
-
     public AppUser() {
     }
 
@@ -41,7 +41,6 @@ public class AppUser {
         this.role = role;
         this.name = name;
         this.firstName = firstName;
-        this.address = address;
     }
 
     public int getId() {
@@ -92,14 +91,6 @@ public class AppUser {
         this.firstName = firstName;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
     @Override
     public String toString() {
         return "AppUser{" +
@@ -109,7 +100,6 @@ public class AppUser {
                 ", role=" + role +
                 ", name='" + name + '\'' +
                 ", firstName='" + firstName + '\'' +
-                ", address=" + address +
                 '}';
     }
 }

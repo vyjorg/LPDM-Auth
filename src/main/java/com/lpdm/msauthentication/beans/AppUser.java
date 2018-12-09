@@ -5,11 +5,9 @@ import com.lpdm.msauthentication.beans.enumeration.AccessEnum;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "app_user", schema = "public")
 public class AppUser {
 
     @Id
@@ -28,6 +26,11 @@ public class AppUser {
     private String firstName;
 
     public AppUser() {
+    }
+
+    public AppUser(@NotNull String email, @NotNull String password) {
+        this.email = email;
+        this.password = password;
     }
 
     public AppUser(@NotNull String email, @NotNull String password, Enum<AccessEnum> role) {

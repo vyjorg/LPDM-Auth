@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-@Component
+//@Component
 public class Init implements CommandLineRunner {
 
     @Autowired
@@ -16,17 +16,17 @@ public class Init implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        AppUser admin1 = new AppUser("vianney.diris@gmail.com", "admin1", AccessEnum.ADMIN);
-        AppUser admin2 = new AppUser("rockntrek@gmail.com", "admin2", AccessEnum.ADMIN);
+        AppUser admin1 = new AppUser("vianney.diris@gmail.com", "admin1");
+        AppUser admin2 = new AppUser("rockntrek@gmail.com", "admin2");
         AppUser admin3 = new AppUser("juliencauwet@yahoo.fr", "admin3", AccessEnum.ADMIN);
 
         AppUser regUser1 = new AppUser("jaycecordon@gmail.com", "reguser1", AccessEnum.CONSUMER);
 
         appUserRepository.save(admin1);
         appUserRepository.save(admin2);
-        appUserRepository.save(admin3);
+        //appUserRepository.save(admin3);
 
-        appUserRepository.save(regUser1);
+        //appUserRepository.save(regUser1);
 
 
     }

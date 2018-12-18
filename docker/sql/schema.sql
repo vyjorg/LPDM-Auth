@@ -1,12 +1,17 @@
 DROP TABLE IF EXISTS "app_user";
 
+CREATE SEQUENCE hibernate_sequence START 1;
+
+CREATE TYPE access_role AS ENUM ('ADMIN', 'CONSUMER', 'PRODUCTOR', 'DELIVERER');
+
 CREATE TABLE "app_user" (
   id SERIAL PRIMARY KEY,
   address varchar(255),
   email varchar(255) default NULL,
   first_name varchar(255) default NULL,
   name varchar(255) default NULL,
-  password varchar(255)
+  password varchar(255),
+  role roles
 );
 
 --drop table if exists address;

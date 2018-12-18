@@ -10,17 +10,18 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("/users")
 public class UserController {
 
     @Autowired
     private AppUserRepository appUserRepository;
 
-    @GetMapping("/users")
+    @GetMapping("/")
     public List<AppUser> getAllUsers(){
         return appUserRepository.findAll();
     }
 
-    @GetMapping("/users/{id}")
+    @GetMapping("/{id}")
     public Optional<AppUser> getUserById(@PathVariable int id){
 
         Optional <AppUser> appUser = appUserRepository.findById(id);
@@ -30,12 +31,21 @@ public class UserController {
         return appUser;
     }
 
-    @PostMapping("/users")
-    public void addUser(AppUser user){
-        appUserRepository.save(user);
+    @GetMapping("/{username}")
+    public Optional <AppUser> getUserByUsername(@PathVariable String username){
+        Optional <AppUser> appUser = appUserRepository.findByEmail(username);
+        if(!appUser.isPresent())
+            throw new UserNotFoundException("Could not find any user matching this id " + username);
+
+        return appUser;
     }
 
-    @DeleteMapping("/users/{id}")
+    @PostMapping("/")
+    public AppUser addUser(@RequestBody AppUser user){
+        return appUserRepository.save(user);
+    }
+
+    @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable int id){
         appUserRepository.deleteById(id);
     }

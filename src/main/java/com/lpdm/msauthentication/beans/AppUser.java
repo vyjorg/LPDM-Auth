@@ -27,8 +27,8 @@ public class AppUser {
     @Transient
     private Enum<AccessEnum> role;
 
-    @ManyToMany
-    private Set<AppRole> roles = new HashSet<>();
+    //@ManyToMany
+    //private Set<AppRole> roles = new HashSet<>();
 
     @Column(name = "name")
     private String name;
@@ -95,13 +95,13 @@ public class AppUser {
         this.firstName = firstName;
     }
 
-    public Set<AppRole> getRoles() {
-        return roles;
-    }
+    //public Set<AppRole> getRoles() {
+    //    return roles;
+    //}
 
-    public void setRoles(Set<AppRole> roles) {
-        this.roles = roles;
-    }
+    //public void setRoles(Set<AppRole> roles) {
+    //    this.roles = roles;
+    //}
 
     @Override
     public String toString() {

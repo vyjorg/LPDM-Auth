@@ -1,8 +1,11 @@
 package com.lpdm.msauthentication.web.controllers;
 
 import com.lpdm.msauthentication.dao.AppUserRepository;
+import com.lpdm.msauthentication.web.exceptions.CannotCreateUserException;
 import com.lpdm.msauthentication.web.exceptions.UserNotFoundException;
 import com.lpdm.msauthentication.beans.AppUser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,6 +15,8 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/users")
 public class UserController {
+
+    Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private AppUserRepository appUserRepository;
@@ -31,10 +36,12 @@ public class UserController {
         return appUser;
     }
 
-    @GetMapping("/{username}")
-    public Optional <AppUser> getUserByUsername(@PathVariable String username){
-        Optional <AppUser> appUser = appUserRepository.findByEmail(username);
-        if(!appUser.isPresent())
+    @PostMapping("/get")
+    public AppUser getUserByUsername(@RequestParam String username){
+        logger.info("user: " + username);
+
+        AppUser appUser = appUserRepository.findByEmail(username);
+        if(appUser == null)
             throw new UserNotFoundException("Could not find any user matching this id " + username);
 
         return appUser;
@@ -42,6 +49,14 @@ public class UserController {
 
     @PostMapping("/")
     public AppUser addUser(@RequestBody AppUser user){
+
+        AppUser appUser = appUserRepository.findByEmail(user.getEmail());
+
+        if (appUser == null)
+            throw new CannotCreateUserException("The user " + user.getEmail() + " already exists");
+
+
+
         return appUserRepository.save(user);
     }
 

@@ -1,6 +1,6 @@
 package com.lpdm.msauthentication.web.controllers;
 
-import com.lpdm.msauthentication.beans.usertypes.AppRole;
+import com.lpdm.msauthentication.model.AppRole;
 import com.lpdm.msauthentication.dao.AppRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;

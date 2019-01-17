@@ -1,6 +1,8 @@
-package com.lpdm.msauthentication.beans.enumeration;
+package com.lpdm.msauthentication.model.enumeration;
 
 public enum AccessEnum {
+    
+    
 
     ADMIN,
     DELIVERER,

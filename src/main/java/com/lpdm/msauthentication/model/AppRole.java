@@ -1,13 +1,12 @@
-package com.lpdm.msauthentication.beans.usertypes;
+package com.lpdm.msauthentication.model;
 
-import com.lpdm.msauthentication.beans.AppUser;
+import com.lpdm.msauthentication.model.AppUser;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+
 
 @Entity
 @Data
@@ -25,6 +24,15 @@ public class AppRole {
     @GeneratedValue
     private String roleName;
 
-    //@ManyToMany
-    //private Set<AppUser> appUser = new HashSet<>();
+    @ManyToOne(cascade = CascadeType.ALL)
+    private AppUser appUser;
+
+    /*
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Area area;
+
+    @OneToMany
+    @JoinColumn(name = "route_id")
+    private Set<Length> lengths =new HashSet<>();
+     */
 }

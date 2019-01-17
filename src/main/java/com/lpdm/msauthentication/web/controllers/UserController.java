@@ -3,7 +3,7 @@ package com.lpdm.msauthentication.web.controllers;
 import com.lpdm.msauthentication.dao.AppUserRepository;
 import com.lpdm.msauthentication.web.exceptions.CannotCreateUserException;
 import com.lpdm.msauthentication.web.exceptions.UserNotFoundException;
-import com.lpdm.msauthentication.beans.AppUser;
+import com.lpdm.msauthentication.model.AppUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

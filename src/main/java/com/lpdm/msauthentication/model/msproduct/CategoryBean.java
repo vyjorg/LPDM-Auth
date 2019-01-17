@@ -1,4 +1,4 @@
-package com.lpdm.msauthentication.beans.msproduct;
+package com.lpdm.msauthentication.model.msproduct;
 
 public class CategoryBean {
 

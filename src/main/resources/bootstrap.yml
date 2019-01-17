@@ -19,4 +19,4 @@ spring:
       uri: https://config.lpdm.kybox.fr
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: validate

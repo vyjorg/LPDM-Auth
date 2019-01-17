@@ -13,7 +13,7 @@ create table app_user (
   password varchar(255),
   registration_date timestamp,
   tel varchar(255),
-  active boolean,
+  active BOOLEAN,
   primary key (id));
 
 create table app_role (

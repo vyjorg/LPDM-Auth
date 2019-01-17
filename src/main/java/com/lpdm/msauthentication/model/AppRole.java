@@ -19,6 +19,7 @@ public class AppRole {
     }
 
     @Id
+    @GeneratedValue
     private int id;
 
     @GeneratedValue

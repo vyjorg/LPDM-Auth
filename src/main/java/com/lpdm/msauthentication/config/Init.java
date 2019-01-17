@@ -1,6 +1,7 @@
 package com.lpdm.msauthentication.config;
 
-/*import com.lpdm.msauthentication.dao.AppUserRepository;
+import com.lpdm.msauthentication.dao.AppRoleRepository;
+import com.lpdm.msauthentication.dao.AppUserRepository;
 import com.lpdm.msauthentication.model.AppRole;
 import com.lpdm.msauthentication.model.AppUser;
 import org.slf4j.Logger;
@@ -14,6 +15,9 @@ public class Init implements CommandLineRunner {
 
     @Autowired
     private AppUserRepository appUserRepository;
+
+    @Autowired
+    private AppRoleRepository appRoleRepository;
 
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -33,8 +37,13 @@ public class Init implements CommandLineRunner {
         //admin1.getRoles().add(admin);
         //admin2.getRoles().add(cons);
 
-        logger.info("entrée des données");
+        logger.info("entrée des rôles");
+        appRoleRepository.save(admin);
+        appRoleRepository.save(prod);
+        appRoleRepository.save(cons);
+        appRoleRepository.save(deliverer);
 
+        logger.info("entrée des users");
         appUserRepository.save(admin1);
         appUserRepository.save(admin2);
         appUserRepository.save(admin3);
@@ -47,4 +56,3 @@ public class Init implements CommandLineRunner {
 
     }
 }
-*/

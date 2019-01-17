@@ -55,7 +55,7 @@ public class AppUser {
     private int addressId;
 
     @Column(name = "active")
-    private Boolean active;
+    private Boolean active = true;
 
     public int getId() {
         return id;

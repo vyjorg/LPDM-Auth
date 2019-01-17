@@ -1,5 +1,6 @@
 package com.lpdm.msauthentication.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.lpdm.msauthentication.model.AppUser;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,8 +26,33 @@ public class AppRole {
     @GeneratedValue
     private String roleName;
 
+    @JsonIgnore
     @ManyToOne(cascade = CascadeType.ALL)
     private AppUser appUser;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
+    }
+
+    public AppUser getAppUser() {
+        return appUser;
+    }
+
+    public void setAppUser(AppUser appUser) {
+        this.appUser = appUser;
+    }
 
     /*
     @ManyToOne(cascade = CascadeType.ALL)

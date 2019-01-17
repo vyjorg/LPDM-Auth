@@ -36,13 +36,21 @@ public class UserController {
         return appUser;
     }
 
-    @PostMapping("/get")
-    public AppUser getUserByUsername(@RequestParam String username){
+    @GetMapping("/email/{email}")
+    public Optional<AppUser> getUserByEmail(@PathVariable String email){
+        Optional<AppUser> appUser = appUserRepository.findByEmail(email);
+        if(!appUser.isPresent())
+            throw new UserNotFoundException("Could not find any user matching this email " + email);
+        return appUser;
+    }
+
+    @GetMapping("/username/{username}")
+    public Optional<AppUser> getUserByUsername(@PathVariable String username){
         logger.info("user: " + username);
 
-        AppUser appUser = appUserRepository.findByEmail(username);
+        Optional<AppUser> appUser = appUserRepository.findByName(username);
         if(appUser == null)
-            throw new UserNotFoundException("Could not find any user matching this id " + username);
+            throw new UserNotFoundException("Could not find any user matching this username " + username);
 
         return appUser;
     }
@@ -50,12 +58,10 @@ public class UserController {
     @PostMapping("/")
     public AppUser addUser(@RequestBody AppUser user){
 
-        AppUser appUser = appUserRepository.findByEmail(user.getEmail());
+        Optional<AppUser> appUser = appUserRepository.findByEmail(user.getEmail());
 
         if (appUser == null)
             throw new CannotCreateUserException("The user " + user.getEmail() + " already exists");
-
-
 
         return appUserRepository.save(user);
     }

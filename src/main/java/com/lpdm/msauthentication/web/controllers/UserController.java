@@ -45,10 +45,10 @@ public class UserController {
     }
 
     @GetMapping("/username/{username}")
-    public Optional<AppUser> getUserByUsername(@PathVariable String username){
+    List<AppUser> getUserByUsername(@PathVariable String username){
         logger.info("user: " + username);
 
-        Optional<AppUser> appUser = appUserRepository.findByName(username);
+        List<AppUser> appUser = appUserRepository.findByName(username);
         if(appUser == null)
             throw new UserNotFoundException("Could not find any user matching this username " + username);
 

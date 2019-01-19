@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 public class Init implements CommandLineRunner {
 
@@ -23,44 +25,40 @@ public class Init implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-       // AppUser admin1 = new AppUser("vianney.diris@gmail.com", "admin1");
-       // AppUser admin2 = new AppUser("rockntrek@gmail.com", "admin2");
-       // AppUser admin3 = new AppUser("juliencauwet@yahoo.fr", "admin3");
-//
-       // AppUser regUser1 = new AppUser("jaycecordon@gmail.com", "reguser1");
-       // AppUser regUser2 = new AppUser("jjolivero83@gmail.com", "reguser2");
-//
-        AppRole admin = new AppRole("ADMIN");
-        AppRole prod = new AppRole("PRODUCTOR");
-        AppRole cons = new AppRole("CONSUMER");
-        AppRole deliverer = new AppRole("DELIVERER");
-//
-       // //admin1.getRoles().add(admin);
-       // //admin2.getRoles().add(cons);
-//
-       // logger.info("entrée des rôles");
+
+        Optional<AppUser> a1 = appUserRepository.findById(1);
+        Optional<AppUser> a2 = appUserRepository.findById(2);
+        Optional<AppUser> a3 = appUserRepository.findById(3);
+
+
+        //AppUser admin1 = new AppUser("vianney.diris@gmail.com", "admin1");
+        //AppUser admin2 = new AppUser("rockntrek@gmail.com", "admin2");
+        //AppUser admin3 = new AppUser("juliencauwet@yahoo.fr", "admin3");
+
+        //AppUser regUser1 = new AppUser("jaycecordon@gmail.com", "reguser1");
+        //AppUser regUser2 = new AppUser("jjolivero83@gmail.com", "reguser2");
+
+        //AppRole admin = new AppRole("ADMIN");
+        //AppRole prod = new AppRole("PRODUCTOR");
+        //AppRole cons = new AppRole("CONSUMER");
+        //AppRole deliverer = new AppRole("DELIVERER");
+
+        //admin1.getRoles().add(admin);
+        //admin2.getRoles().add(cons);
+
+        //logger.info("entrée des rôles");
         //appRoleRepository.save(admin);
         //appRoleRepository.save(prod);
         //appRoleRepository.save(cons);
         //appRoleRepository.save(deliverer);
-//
-       // logger.info("entrée des users");
-       // appUserRepository.save(admin1);
-       // appUserRepository.save(admin2);
-       // appUserRepository.save(admin3);
-//
-       // appUserRepository.save(regUser1);
-       // appUserRepository.save(regUser2);
+        //logger.info("entrée des users");
+        //appUserRepository.save(admin1);
+        //appUserRepository.save(admin2);
+        //appUserRepository.save(admin3);
 
-
-       // AppUser admin1 = new AppUser("test5@gmail.com", "test5");
-       // admin1.setName("test5");
-       // admin1.getRoles().add(admin);
-       // admin1.getRoles().add(cons);
-       // appUserRepository.save(admin1);
-
-
-
+        //admin1.getRoles().add(appRoleRepository.findById(1));
+        //admin1.getRoles().add(appRoleRepository.findById(3));
+        //appUserRepository.save(admin1);
 
     }
 }

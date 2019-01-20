@@ -30,9 +30,6 @@ public class UserController {
     public AppUser getUserById(@PathVariable int id){
 
         AppUser appUser = appUserRepository.getAppUserById(id);
-        if(appUser == null)
-            throw new UserNotFoundException("Could not find any user matching this id " + id);
-
         return appUser;
     }
 
@@ -60,7 +57,7 @@ public class UserController {
 
         AppUser appUser = appUserRepository.findByEmail(user.getEmail());
 
-        if (appUser == null)
+        if (appUser != null)
             throw new CannotCreateUserException("The user " + user.getEmail() + " already exists");
 
         return appUserRepository.save(user);

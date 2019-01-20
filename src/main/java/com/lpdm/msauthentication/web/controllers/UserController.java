@@ -30,14 +30,15 @@ public class UserController {
     public AppUser getUserById(@PathVariable int id){
 
         AppUser appUser = appUserRepository.getAppUserById(id);
+        if(appUser == null)
+            throw new UserNotFoundException("Could not find any user matching this id " + id);
+
         return appUser;
     }
 
     @GetMapping("/email/{email}")
     public AppUser getUserByEmail(@PathVariable String email){
         AppUser appUser = appUserRepository.findByEmail(email);
-        if(appUser == null)
-            throw new UserNotFoundException("Could not find any user matching this email " + email);
         return appUser;
     }
 

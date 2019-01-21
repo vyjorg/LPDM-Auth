@@ -26,6 +26,7 @@ public class AppRole {
     @Column(name = "users")
     @OneToMany
     @JoinColumn(name = "app_role_id")
+    @JsonIgnore
     private Set<UserRoles> roles = new HashSet<>();
 
 

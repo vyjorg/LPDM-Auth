@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface AppRoleRepository extends JpaRepository<AppRole, Integer> {
 
-    AppRole findById(int id);
+    AppRole getAppRoleById(int id);
 
 
 }

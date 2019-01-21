@@ -1,5 +1,6 @@
 package com.lpdm.msauthentication.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -38,6 +39,7 @@ public class AppUser {
     @Column(name = "roles")
     @OneToMany
     @JoinColumn(name = "app_user_id")
+    @JsonIgnore
     private Set<UserRoles> roles = new HashSet<>();
 
     @Column(name = "name")

@@ -1,15 +1,13 @@
 package com.lpdm.msauthentication.dao;
 
-import com.lpdm.msauthentication.model.AppRole;
+import com.lpdm.msauthentication.model.UserRoles;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface AppRoleRepository extends JpaRepository<AppRole, Integer> {
+public interface UserRolesRepository extends JpaRepository<UserRoles, Integer> {
 
-    AppRole findById(int id);
-
-
+    List<UserRoles> getUserRolesByAppUserId(int appUserId);
 }

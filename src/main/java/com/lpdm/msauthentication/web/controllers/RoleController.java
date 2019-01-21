@@ -29,4 +29,12 @@ public class RoleController {
     public AppRole getRoleById(@PathVariable("id") int id){
         return appRoleRepository.findById(id);
     }
+
+    @GetMapping("/per_user/{id}")
+    public  List<AppRole> getRolesPerUserId(@PathVariable("id") int userId){return null;}
+
+    @GetMapping("/{user_id}/{role_id}")
+    public  void addRole(@PathVariable ("user_id") int userId, @PathVariable ("role_id") int roleId){
+
+    }
 }

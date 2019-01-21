@@ -10,4 +10,6 @@ import java.util.List;
 public interface UserRolesRepository extends JpaRepository<UserRoles, Integer> {
 
     List<UserRoles> getUserRolesByAppUserId(int appUserId);
+
+
 }

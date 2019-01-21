@@ -1,8 +1,10 @@
 package com.lpdm.msauthentication.web.controllers;
 
+import com.lpdm.msauthentication.dao.AppUserRepository;
 import com.lpdm.msauthentication.dao.UserRolesRepository;
 import com.lpdm.msauthentication.model.AppRole;
 import com.lpdm.msauthentication.dao.AppRoleRepository;
+import com.lpdm.msauthentication.model.AppUser;
 import com.lpdm.msauthentication.model.UserRoles;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +23,9 @@ public class RoleController {
 
     @Autowired
     UserRolesRepository userRolesRepository;
+
+    @Autowired
+    AppUserRepository appUserRepository;
 
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -53,8 +58,12 @@ public class RoleController {
         return userRoles;
     }
 
-    @GetMapping("/{user_id}/{role_id}")
-    public  void addRole(@PathVariable ("user_id") int userId, @PathVariable ("role_id") int roleId){
 
+    @GetMapping("/{user_id}/{role_id}")
+    public UserRoles addRoleperUserId(@PathVariable ("user_id") int userId, @PathVariable ("role_id") int roleId){
+        UserRoles userRole = new UserRoles();
+        userRole.setAppRole(appRoleRepository.getAppRoleById(roleId));
+        userRole.setAppUser(appUserRepository.getAppUserById(userId));
+        return userRolesRepository.save(userRole);
     }
 }

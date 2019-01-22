@@ -21,16 +21,10 @@ public class UserRoles {
     @ManyToOne(cascade = CascadeType.ALL)
     private AppRole appRole;
 
+    @Column(name = "app_user")
     @JsonIgnore
     @ManyToOne(cascade = CascadeType.ALL)
     private AppUser appUser;
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
 }

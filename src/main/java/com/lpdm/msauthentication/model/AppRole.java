@@ -23,7 +23,6 @@ public class AppRole {
 
     private String roleName;
 
-    @Column(name = "users")
     @OneToMany
     @JoinColumn(name = "app_role_id")
     @JsonIgnore

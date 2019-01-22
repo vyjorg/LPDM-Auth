@@ -26,6 +26,7 @@ public class AppUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     private int id;
 
     @NotNull
@@ -37,9 +38,8 @@ public class AppUser {
     private String password;
 
     @Column(name = "roles")
-    @OneToMany
-    @JoinColumn(name = "app_user_id")
-    @JsonIgnore
+    //@JoinColumn(name = "app_user_id")
+    @OneToMany(mappedBy = "app_user")
     private Set<UserRoles> roles = new HashSet<>();
 
     @Column(name = "name")

@@ -48,21 +48,21 @@ public class RoleController {
     @GetMapping(value = "/per_user/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public  List<AppRole> getRolesPerUserId(@PathVariable("id") int userId){
         List <AppRole> userRoles = new ArrayList<>();
-        List <UserRoles> roles = userRolesRepository.getUserRolesByAppUserId(userId);
-        logger.info("taille de 'roles':  " + roles.size());
+        //List <UserRoles> roles = userRolesRepository.getUserRolesByAppUserId(userId);
+        //logger.info("taille de 'roles':  " + roles.size());
 
-        for (UserRoles role: roles) {
-            logger.info("userId: " + userId + " userRoleId " + role.getAppRole().getId() + " userId: " + appRoleRepository.getAppRoleById(role.getId()));
-            userRoles.add(appRoleRepository.getAppRoleById(role.getAppRole().getId()));
-        }
+      // for (UserRoles role: roles) {
+      //     logger.info("userId: " + userId + " userRoleId " + role.getAppRole().getId() + " userId: " + appRoleRepository.getAppRoleById(role.getId()));
+      //     userRoles.add(appRoleRepository.getAppRoleById(role.getAppRole().getId()));
+      // }
         return userRoles;
     }
 
     @GetMapping(value = "/{user_id}/{role_id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public UserRoles addRoleperUserId(@PathVariable ("user_id") int userId, @PathVariable ("role_id") int roleId) {
         UserRoles userRole = new UserRoles();
-        userRole.setAppRole(appRoleRepository.getAppRoleById(roleId));
-        userRole.setAppUser(appUserRepository.getAppUserById(userId));
+        //userRole.setAppRole(appRoleRepository.getAppRoleById(roleId));
+        //userRole.setAppUser(appUserRepository.getAppUserById(userId));
         return userRolesRepository.save(userRole);
     }
 

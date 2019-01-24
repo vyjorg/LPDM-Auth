@@ -2,4 +2,4 @@
 target/
 docker/.DS_Store
 ms-authentication.iml
-.DS_storegitignore
+.DS_store

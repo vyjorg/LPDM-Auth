@@ -7,7 +7,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 
@@ -23,10 +25,16 @@ public class AppRole {
 
     private String roleName;
 
-    @OneToMany
-    @JoinColumn(name = "app_role_id")
-    @JsonIgnore
-    private Set<UserRoles> roles = new HashSet<>();
+    @ManyToMany(fetch = FetchType.EAGER,
+            cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
+    @JoinTable(name = "app_role_app_user",
+            joinColumns = @JoinColumn(name = "app_role_id"),
+            inverseJoinColumns = @JoinColumn(name = "app_user_id")
+    )
+    private List<AppUser> users = new ArrayList<>();
 
 
 

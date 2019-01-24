@@ -9,7 +9,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -38,10 +40,9 @@ public class AppUser {
     @JsonIgnore
     private String password;
 
-    @Column(name = "roles")
-    //@JoinColumn(name = "app_user_id")
-    @OneToMany(mappedBy = "app_user")
-    private Set<UserRoles> roles = new HashSet<>();
+    @ManyToMany(mappedBy = "users", fetch = FetchType.EAGER)
+    private List<AppRole> appRole = new ArrayList<>();
+
 
     @Column(name = "name")
     private String name;

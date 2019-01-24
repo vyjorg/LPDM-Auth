@@ -17,14 +17,14 @@ public class UserRoles {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @JsonIgnore
-    @ManyToOne(cascade = CascadeType.ALL)
-    private AppRole appRole;
+   //@JsonIgnore
+   //@ManyToOne(cascade = CascadeType.ALL)
+   //private AppRole appRole;
 
-    @Column(name = "app_user")
-    @JsonIgnore
-    @ManyToOne(cascade = CascadeType.ALL)
-    private AppUser appUser;
+   //@Column(name = "app_user")
+   //@JsonIgnore
+   //@ManyToOne(cascade = CascadeType.ALL)
+   //private AppUser appUser;
 
 
 }

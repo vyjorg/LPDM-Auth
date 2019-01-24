@@ -1,6 +1,8 @@
 package com.lpdm.msauthentication.web.controllers;
 
+import com.lpdm.msauthentication.dao.AppRoleRepository;
 import com.lpdm.msauthentication.dao.AppUserRepository;
+import com.lpdm.msauthentication.model.AppRole;
 import com.lpdm.msauthentication.web.exceptions.CannotCreateUserException;
 import com.lpdm.msauthentication.web.exceptions.UserNotFoundException;
 import com.lpdm.msauthentication.model.AppUser;
@@ -21,6 +23,9 @@ public class UserController {
 
     @Autowired
     private AppUserRepository appUserRepository;
+
+    @Autowired
+    private AppRoleRepository appRoleRepository;
 
     @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public List<AppUser> getAllUsers(){
@@ -69,6 +74,14 @@ public class UserController {
     public void deleteUser(@PathVariable int id){
         appUserRepository.deleteById(id);
     }
+
+    @GetMapping("/roles/{id}")
+    public List<AppRole> getRolesByUser(@PathVariable("id") int id){
+        AppUser appUser = appUserRepository.getAppUserById(id);
+        List<AppRole> appRoles = appRoleRepository.getAppRolesByUsersEquals(appUser);
+        return appRoles;
+    }
+
 
     
 }

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.lpdm.msauthentication.model.AppUser;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -14,7 +15,6 @@ import java.util.Set;
 
 
 @Entity
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class AppRole {
@@ -36,6 +36,28 @@ public class AppRole {
     )
     private List<AppUser> users = new ArrayList<>();
 
+    public int getId() {
+        return id;
+    }
 
+    public void setId(int id) {
+        this.id = id;
+    }
 
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
+    }
+
+    @JsonIgnore
+    public List<AppUser> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<AppUser> users) {
+        this.users = users;
+    }
 }

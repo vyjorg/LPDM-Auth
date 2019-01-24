@@ -26,9 +26,9 @@ public class Init implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        AppUser a1 = appUserRepository.getAppUserById(1);
-        AppUser a2 = appUserRepository.getAppUserById(2);
-        AppUser a3 = appUserRepository.getAppUserById(3);
+        //AppUser a1 = appUserRepository.getAppUserById(1);
+        //AppUser a2 = appUserRepository.getAppUserById(2);
+        //AppUser a3 = appUserRepository.getAppUserById(3);
 
 
         //AppUser admin1 = new AppUser("vianney.diris@gmail.com", "admin1");

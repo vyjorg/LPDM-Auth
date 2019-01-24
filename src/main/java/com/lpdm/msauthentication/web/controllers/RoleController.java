@@ -4,7 +4,6 @@ import com.lpdm.msauthentication.dao.AppUserRepository;
 import com.lpdm.msauthentication.dao.UserRolesRepository;
 import com.lpdm.msauthentication.model.AppRole;
 import com.lpdm.msauthentication.dao.AppRoleRepository;
-import com.lpdm.msauthentication.model.AppUser;
 import com.lpdm.msauthentication.model.UserRoles;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,12 +58,16 @@ public class RoleController {
         return userRoles;
     }
 
-
     @GetMapping(value = "/{user_id}/{role_id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public UserRoles addRoleperUserId(@PathVariable ("user_id") int userId, @PathVariable ("role_id") int roleId){
+    public UserRoles addRoleperUserId(@PathVariable ("user_id") int userId, @PathVariable ("role_id") int roleId) {
         UserRoles userRole = new UserRoles();
         userRole.setAppRole(appRoleRepository.getAppRoleById(roleId));
         userRole.setAppUser(appUserRepository.getAppUserById(userId));
         return userRolesRepository.save(userRole);
+    }
+
+    @GetMapping("/{user_id}/{role_id}")
+    public  void addRole(@PathVariable ("user_id") int userId, @PathVariable ("role_id") int roleId){
+
     }
 }

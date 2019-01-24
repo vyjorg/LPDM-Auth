@@ -13,7 +13,7 @@ public interface AppUserRepository extends JpaRepository<AppUser,Integer> {
 
     AppUser findByEmail(String email);
 
-    List<AppUser> findByName(String name);
+    List<AppUser> findByNameLike(String name);
 
 
 }

@@ -1,10 +1,10 @@
 package com.lpdm.msauthentication.web.controllers;
 
 import com.lpdm.msauthentication.dao.AppUserRepository;
-import com.lpdm.msauthentication.dao.UserRolesRepository;
 import com.lpdm.msauthentication.model.AppRole;
 import com.lpdm.msauthentication.dao.AppRoleRepository;
-import com.lpdm.msauthentication.model.UserRoles;
+import com.lpdm.msauthentication.model.AppUser;
+import com.sun.jersey.core.impl.provider.entity.XMLRootObjectProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +20,6 @@ public class RoleController {
 
     @Autowired
     AppRoleRepository appRoleRepository;
-
-    @Autowired
-    UserRolesRepository userRolesRepository;
 
     @Autowired
     AppUserRepository appUserRepository;
@@ -47,27 +44,17 @@ public class RoleController {
 
     @GetMapping(value = "/per_user/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public  List<AppRole> getRolesPerUserId(@PathVariable("id") int userId){
-        List <AppRole> userRoles = new ArrayList<>();
-        //List <UserRoles> roles = userRolesRepository.getUserRolesByAppUserId(userId);
-        //logger.info("taille de 'roles':  " + roles.size());
-
-      // for (UserRoles role: roles) {
-      //     logger.info("userId: " + userId + " userRoleId " + role.getAppRole().getId() + " userId: " + appRoleRepository.getAppRoleById(role.getId()));
-      //     userRoles.add(appRoleRepository.getAppRoleById(role.getAppRole().getId()));
-      // }
-        return userRoles;
+       AppUser user = appUserRepository.getAppUserById(userId);
+       List<AppRole> appRoles = appRoleRepository.getAppRolesByUsersEquals(user);
+       return appRoles;
     }
 
     @GetMapping(value = "/{user_id}/{role_id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public UserRoles addRoleperUserId(@PathVariable ("user_id") int userId, @PathVariable ("role_id") int roleId) {
-        UserRoles userRole = new UserRoles();
-        //userRole.setAppRole(appRoleRepository.getAppRoleById(roleId));
-        //userRole.setAppUser(appUserRepository.getAppUserById(userId));
-        return userRolesRepository.save(userRole);
+    public AppRole addRoleperUserId(@PathVariable ("user_id") int userId, @PathVariable ("role_id") int roleId) {
+        AppRole appRole = appRoleRepository.getAppRoleById(roleId);
+        AppUser appUser = appUserRepository.getAppUserById(userId);
+        appRole.getUsers().add(appUser);
+        return appRoleRepository.save(appRole);
     }
 
-    @GetMapping("/{user_id}/{role_id}")
-    public  void addRole(@PathVariable ("user_id") int userId, @PathVariable ("role_id") int roleId){
-
-    }
 }

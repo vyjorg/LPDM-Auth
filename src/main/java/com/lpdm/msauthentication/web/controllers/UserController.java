@@ -75,7 +75,7 @@ public class UserController {
         appUserRepository.deleteById(id);
     }
 
-    @GetMapping("/roles/{id}")
+    @GetMapping(value = "/roles/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public List<AppRole> getRolesByUser(@PathVariable("id") int id){
         AppUser appUser = appUserRepository.getAppUserById(id);
         List<AppRole> appRoles = appRoleRepository.getAppRolesByUsersEquals(appUser);

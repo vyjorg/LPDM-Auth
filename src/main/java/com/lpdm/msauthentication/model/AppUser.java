@@ -35,6 +35,7 @@ public class AppUser {
 
     @NotNull
     @Column(name= "password")
+    @JsonIgnore
     private String password;
 
     @Column(name = "roles")

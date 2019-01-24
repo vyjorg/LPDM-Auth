@@ -7,6 +7,7 @@ import com.lpdm.msauthentication.model.AppUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,12 +22,12 @@ public class UserController {
     @Autowired
     private AppUserRepository appUserRepository;
 
-    @GetMapping("/")
+    @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public List<AppUser> getAllUsers(){
         return appUserRepository.findAll();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public AppUser getUserById(@PathVariable int id){
 
         AppUser appUser = appUserRepository.getAppUserById(id);
@@ -36,13 +37,13 @@ public class UserController {
         return appUser;
     }
 
-    @GetMapping("/email/{email}")
+    @GetMapping(value = "/email/{email}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public AppUser getUserByEmail(@PathVariable String email){
         AppUser appUser = appUserRepository.findByEmail(email);
         return appUser;
     }
 
-    @GetMapping("/username/{username}")
+    @GetMapping(value = "/username/{username}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     List<AppUser> getUserByUsername(@PathVariable String username){
         logger.info("user: " + username);
 
@@ -53,7 +54,7 @@ public class UserController {
         return appUser;
     }
 
-    @PostMapping("/")
+    @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public AppUser addUser(@RequestBody AppUser user){
 
         AppUser appUser = appUserRepository.findByEmail(user.getEmail());

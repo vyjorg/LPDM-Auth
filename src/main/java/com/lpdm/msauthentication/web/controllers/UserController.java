@@ -9,6 +9,7 @@ import com.lpdm.msauthentication.model.AppUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,7 +39,6 @@ public class UserController {
         AppUser appUser = appUserRepository.getAppUserById(id);
         if(appUser == null)
             throw new UserNotFoundException("Could not find any user matching this id " + id);
-        //appUser.setAppRole(appRoleRepository.getAppRolesByUsersEquals(appUser));
         return appUser;
     }
 
@@ -75,13 +75,13 @@ public class UserController {
         appUserRepository.deleteById(id);
     }
 
+    @GetMapping(value = "/per_role/{id}")
+    public List<AppUser>getUsersByRole(@PathVariable("id") int id){
+        AppRole role = appRoleRepository.getAppRoleById(id);
+        return appUserRepository.getAppUsersByAppRoleEquals(role);
+    }
 
-    //@GetMapping(value = "/roles/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    //public List<AppRole> getRolesByUser(@PathVariable("id") int id){
-    //    AppUser appUser = appUserRepository.getAppUserById(id);
-    //    List<AppRole> appRoles = appRoleRepository.getAppRolesByUsersEquals(appUser);
-    //    return appRoles;
-    //}
+
 
 
     

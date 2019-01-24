@@ -38,7 +38,7 @@ public class UserController {
         AppUser appUser = appUserRepository.getAppUserById(id);
         if(appUser == null)
             throw new UserNotFoundException("Could not find any user matching this id " + id);
-
+        //appUser.setAppRole(appRoleRepository.getAppRolesByUsersEquals(appUser));
         return appUser;
     }
 

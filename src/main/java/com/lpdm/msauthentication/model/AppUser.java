@@ -1,6 +1,7 @@
 package com.lpdm.msauthentication.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -88,7 +89,7 @@ public class AppUser {
         this.password = password;
     }
 
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     public List<AppRole> getAppRole() {
         return appRole;
     }

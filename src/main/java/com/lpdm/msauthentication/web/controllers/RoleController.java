@@ -78,15 +78,44 @@ public class RoleController {
         AppUser appUser = appUserRepository.getAppUserById(userId);
         if (appUser == null)
             throw new UserNotFoundException("L'utilisateur n'existe pas");
-        List<AppRole> appRoles = appRoleRepository.getAppRolesByUsersEquals(appUser);
 
-        for (AppRole role : appRoles){
-            if (role.equals(appRoleRepository.getAppRoleById(roleId)))
-                return appUser;
-        }
+        if (hasRole(appUser, roleId))
+            return appUser;
+
         return null;
     }
 
+    /**
+     * check if the user matching the id has the role entered as parameter
+     * @param username
+     * @param roleId
+     * @return user if it matches the role or null if it does not
+     */
+    @GetMapping(value = "/check/username/{username}/{role_id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public AppUser returnUserByUserNameIfHasRole(@PathVariable("username") String username, @PathVariable("role_id") int roleId) throws UserNotFoundException {
+        logger.info("entering method");
+        AppUser appUser = appUserRepository.findByName(username);
 
+        if (appUser == null)
+            throw new UserNotFoundException("L'utilisateur n'existe pas");
+
+        //List<AppRole> appRoles = appRoleRepository.getAppRolesByUsersEquals(appUser);
+
+        if (hasRole(appUser, roleId))
+                return appUser;
+
+        return null;
+    }
+
+    private Boolean hasRole(AppUser user, int roleId){
+        List<AppRole> appRoles = appRoleRepository.getAppRolesByUsersEquals(user);
+
+        for (AppRole role : appRoles){
+            if (role.equals(appRoleRepository.getAppRoleById(roleId)))
+                return true;
+        }
+
+        return false;
+    }
 
 }

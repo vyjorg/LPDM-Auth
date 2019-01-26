@@ -36,7 +36,6 @@ public class AppUser {
 
     @NotNull
     @Column(name= "password")
-    @JsonIgnore
     private String password;
 
     @ManyToMany(mappedBy = "users", fetch = FetchType.EAGER)
@@ -80,6 +79,7 @@ public class AppUser {
         this.email = email;
     }
 
+    @JsonIgnore
     public String getPassword() {
         return password;
     }
@@ -152,4 +152,6 @@ public class AppUser {
     public void setActive(Boolean active) {
         this.active = active;
     }
+
+
 }

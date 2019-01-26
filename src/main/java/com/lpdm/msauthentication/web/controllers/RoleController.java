@@ -93,13 +93,11 @@ public class RoleController {
      */
     @GetMapping(value = "/check/username/{username}/{role_id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public AppUser returnUserByUserNameIfHasRole(@PathVariable("username") String username, @PathVariable("role_id") int roleId) throws UserNotFoundException {
-        logger.info("entering method");
+        logger.info("entering returnUserByUserNameIfHasRole method");
         AppUser appUser = appUserRepository.findByName(username);
 
         if (appUser == null)
             throw new UserNotFoundException("L'utilisateur n'existe pas");
-
-        //List<AppRole> appRoles = appRoleRepository.getAppRolesByUsersEquals(appUser);
 
         if (hasRole(appUser, roleId))
                 return appUser;

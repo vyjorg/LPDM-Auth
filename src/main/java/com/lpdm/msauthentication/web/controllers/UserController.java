@@ -37,33 +37,10 @@ public class UserController {
     public AppUser getUserById(@PathVariable int id){
 
         AppUser appUser = appUserRepository.findById(id);
-        logger.info(appUser.toString());
         if(appUser == null)
             throw new UserNotFoundException("Could not find any user matching this id " + id);
         return appUser;
     }
-
-    /*
-     @GetMapping(value = "/address/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public Address findAddressById(@PathVariable int id){
-        log.info("AddressController -> méthode findAddressById : entrée ");
-        log.info("AddressController -> méthode findAddressById : id envoyé = "+id);
-
-        Address address = addressDao.findById(id);
-        if(address == null){
-            log.warn("AddressController -> méthode findAdressById : adress null ");
-            throw new AddressNotFound("Aucune adresse trouvé pour l'id = "+id);
-        }
-
-        address.setCity(cityController.cityById(address.getCityId()));
-
-
-
-        log.info("AdressController -> méthode findAdressById : sortie ");
-        return address;
-    }
-
-     */
 
     @GetMapping(value = "/email/{email}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public AppUser getUserByEmail(@PathVariable String email){
@@ -76,7 +53,7 @@ public class UserController {
         logger.info("user: " + username);
 
         List<AppUser> appUser = appUserRepository.findAllByNameContainingIgnoreCase(username);
-        if(appUser == null)
+        if(appUser.size() == 0)
             throw new UserNotFoundException("Could not find any user matching this username " + username);
 
         return appUser;

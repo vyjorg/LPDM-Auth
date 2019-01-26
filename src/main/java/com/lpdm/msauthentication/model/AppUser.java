@@ -83,12 +83,12 @@ public class AppUser {
         this.email = email;
     }
 
-
+    @JsonIgnore
     public String getPassword() {
         return password;
     }
 
-    @JsonIgnore
+    @JsonProperty
     public void setPassword(String password) {
         this.password = password;
     }

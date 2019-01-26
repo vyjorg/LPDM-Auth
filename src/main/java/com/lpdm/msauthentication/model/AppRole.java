@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -15,8 +17,9 @@ import java.util.Set;
 
 
 @Entity
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@Table(name="app_role")
 public class AppRole {
 
     @Id
@@ -25,16 +28,11 @@ public class AppRole {
 
     private String roleName;
 
-    @ManyToMany(fetch = FetchType.EAGER,
-            cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
-    })
+    @ManyToMany(fetch=FetchType.LAZY)
     @JoinTable(name = "app_role_app_user",
             joinColumns = @JoinColumn(name = "app_role_id"),
-            inverseJoinColumns = @JoinColumn(name = "app_user_id")
-    )
-    private List<AppUser> users = new ArrayList<>();
+            inverseJoinColumns = @JoinColumn(name = "app_user_id"))
+    private List<AppUser> users;
 
     public int getId() {
         return id;
@@ -58,6 +56,10 @@ public class AppRole {
     }
 
     public void setUsers(List<AppUser> users) {
-        this.users = users;
+            this.users = users;
     }
+
+
 }
+
+

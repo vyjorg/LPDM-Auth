@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -38,9 +40,11 @@ public class AppUser {
     @Column(name= "password")
     private String password;
 
-    @ManyToMany(mappedBy = "users", fetch = FetchType.EAGER)
-    private List<AppRole> appRole = new ArrayList<>();
-
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "app_role_app_user",
+            joinColumns = @JoinColumn(name = "app_user_id"),
+            inverseJoinColumns = @JoinColumn(name = "app_role_id"))
+    private List<AppRole> appRole;
 
     @Column(name = "name")
     private String name;
@@ -89,7 +93,7 @@ public class AppUser {
         this.password = password;
     }
 
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+
     public List<AppRole> getAppRole() {
         return appRole;
     }

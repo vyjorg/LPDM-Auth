@@ -79,11 +79,12 @@ public class AppUser {
         this.email = email;
     }
 
-    @JsonIgnore
+
     public String getPassword() {
         return password;
     }
 
+    @JsonIgnore
     public void setPassword(String password) {
         this.password = password;
     }

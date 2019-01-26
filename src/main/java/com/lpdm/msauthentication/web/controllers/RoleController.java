@@ -92,17 +92,19 @@ public class RoleController {
      * @return user if it matches the role or null if it does not
      */
     @GetMapping(value = "/check/username/{username}/{role_id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public AppUser returnUserByUserNameIfHasRole(@PathVariable("username") String username, @PathVariable("role_id") int roleId) throws UserNotFoundException {
+    public List<AppUser> returnUserByUsersNameIfHasRole(@PathVariable("username") String username, @PathVariable("role_id") int roleId) throws UserNotFoundException {
         logger.info("entering returnUserByUserNameIfHasRole method");
-        AppUser appUser = appUserRepository.findByName(username);
+        List<AppUser> appUsers = appUserRepository.findAllByNameContainingIgnoreCase(username);
 
-        if (appUser == null)
+        for (AppUser appUser: appUsers) {
+            if (!hasRole(appUser, roleId))
+                appUsers.remove(appUser);
+        }
+
+        if (appUsers.size() == 0)
             throw new UserNotFoundException("L'utilisateur n'existe pas");
 
-        if (hasRole(appUser, roleId))
-                return appUser;
-
-        return null;
+        return appUsers;
     }
 
     private Boolean hasRole(AppUser user, int roleId){

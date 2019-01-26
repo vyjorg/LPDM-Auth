@@ -14,7 +14,7 @@ public interface AppUserRepository extends JpaRepository<AppUser,Integer> {
 
     AppUser findByEmail(String email);
 
-    List<AppUser> findByNameLike(String name);
+    List<AppUser> findAllByNameContainingIgnoreCase(String name);
 
     List<AppUser> getAppUsersByAppRoleEquals(AppRole role);
 }

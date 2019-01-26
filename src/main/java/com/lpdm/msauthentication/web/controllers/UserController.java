@@ -52,7 +52,7 @@ public class UserController {
     List<AppUser> getUserByUsername(@PathVariable String username){
         logger.info("user: " + username);
 
-        List<AppUser> appUser = appUserRepository.findByNameLike(username);
+        List<AppUser> appUser = appUserRepository.findAllByNameContainingIgnoreCase(username);
         if(appUser == null)
             throw new UserNotFoundException("Could not find any user matching this username " + username);
 

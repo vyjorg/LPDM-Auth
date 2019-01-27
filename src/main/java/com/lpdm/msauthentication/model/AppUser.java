@@ -38,6 +38,7 @@ public class AppUser {
 
     @NotNull
     @Column(name= "password")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -83,12 +84,10 @@ public class AppUser {
         this.email = email;
     }
 
-    @JsonIgnore
     public String getPassword() {
         return password;
     }
 
-    @JsonProperty
     public void setPassword(String password) {
         this.password = password;
     }

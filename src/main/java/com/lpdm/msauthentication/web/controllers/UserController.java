@@ -4,6 +4,7 @@ import com.lpdm.msauthentication.dao.AppRoleRepository;
 import com.lpdm.msauthentication.dao.AppUserRepository;
 import com.lpdm.msauthentication.model.AppRole;
 import com.lpdm.msauthentication.web.exceptions.CannotCreateUserException;
+import com.lpdm.msauthentication.web.exceptions.IncorrectPasswordException;
 import com.lpdm.msauthentication.web.exceptions.UserNotFoundException;
 import com.lpdm.msauthentication.model.AppUser;
 import org.slf4j.Logger;
@@ -40,6 +41,22 @@ public class UserController {
         if(appUser == null)
             throw new UserNotFoundException("Could not find any user matching this id " + id);
         return appUser;
+    }
+
+    @PostMapping(value = "/login", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public AppUser login(@RequestBody AppUser user){
+        AppUser DbUser = appUserRepository.findByEmail(user.getEmail());
+        if (DbUser == null){
+            logger.info("Pas d'utilisateur trouvé");
+            throw new UserNotFoundException("Could not find any user matching this email " + user.getEmail());
+
+        } else if (user.getPassword().equals(DbUser.getPassword())){
+            logger.info("Entrée de l'utilisateur dans la session");
+            return DbUser;
+        } else {
+            logger.info("Mot de passe incorrect: " + user.getPassword() + " " + DbUser.getPassword());
+            throw new UserNotFoundException("Incorrect Password");
+        }
     }
 
     @GetMapping(value = "/email/{email}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)

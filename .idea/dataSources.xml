@@ -7,5 +7,11 @@
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://localhost:28181/db_auth</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="db_auth@91.121.110.162" uuid="af526041-b379-45f8-8343-6a4723f2d19c">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://91.121.110.162:28181/db_auth</jdbc-url>
+    </data-source>
   </component>
 </project>

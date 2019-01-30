@@ -51,7 +51,6 @@ public class UserController {
             throw new UserNotFoundException("Could not find any user matching this email " + user.getEmail());
 
         } else if (user.getPassword().equals(DbUser.getPassword())){
-            logger.info("Entrée de l'utilisateur dans la session");
             return DbUser;
         } else {
             logger.info("Mot de passe incorrect: " + user.getPassword() + " " + DbUser.getPassword());

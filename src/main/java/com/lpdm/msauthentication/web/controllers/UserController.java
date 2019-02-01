@@ -101,12 +101,18 @@ public class UserController {
     public AppUser updateAppUser(@RequestBody AppUser user){
 
         AppUser dbUser = appUserRepository.findById(user.getId());
+
+        if (dbUser == null)
+            throw  new UserNotFoundException("The user id: " + user.getId() + " does not exist");
+
         user.setPassword(dbUser.getPassword());
         logger.info("Modification de l'utilisateur");
         return appUserRepository.save(user);
     }
 
-    @PutMapping(value = "/password/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+
+    //TODO : can't find oldpassword
+    @PutMapping(value = "/password/{id}", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public Boolean updatePassword(@PathVariable("id") int id, @RequestBody String oldPassword, @RequestBody String newPassword){
         AppUser dbUser = appUserRepository.getAppUserById(id);
         if(oldPassword == dbUser.getPassword()) {

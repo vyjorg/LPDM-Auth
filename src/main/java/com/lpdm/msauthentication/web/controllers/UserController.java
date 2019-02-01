@@ -97,6 +97,28 @@ public class UserController {
         return appUserRepository.getAppUsersByAppRoleEquals(role);
     }
 
+    @PutMapping(value = "/updateuser", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public AppUser updateAppUser(@RequestBody AppUser user){
+
+        AppUser dbUser = appUserRepository.findById(user.getId());
+        user.setPassword(dbUser.getPassword());
+        logger.info("Modification de l'utilisateur");
+        return appUserRepository.save(user);
+    }
+
+    @PutMapping(value = "/password/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public Boolean updatePassword(@PathVariable("id") int id, @RequestBody String oldPassword, @RequestBody String newPassword){
+        AppUser dbUser = appUserRepository.getAppUserById(id);
+        if(oldPassword == dbUser.getPassword()) {
+            logger.info("user modification successful!");
+            dbUser.setPassword(newPassword);
+            return true;
+        }else{
+            logger.info("Old password incorrect, can't save the modifications");
+            throw new IncorrectPasswordException("Incorrect password");
+        }
+    }
+
 
 
 

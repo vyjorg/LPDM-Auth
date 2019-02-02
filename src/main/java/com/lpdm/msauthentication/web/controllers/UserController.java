@@ -89,6 +89,7 @@ public class UserController {
         for (AppUser user : appUser)
             assignAddressToUSer(user);
 
+
         return appUser;
     }
 
@@ -157,7 +158,7 @@ public class UserController {
         Address address = null;
 
         try {
-            address = locationProxy.findAddressById(user.getId());
+            address = locationProxy.findAddressById(user.getAddressId());
         }catch (FeignException e){
             logger.info("L'id ne correspond à aucune adresse");
         }

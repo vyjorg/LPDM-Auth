@@ -2,6 +2,7 @@ package com.lpdm.msauthentication.proxies;
 
 import com.lpdm.msauthentication.model.mslocation.Address;
 import com.lpdm.msauthentication.model.mslocation.City;
+import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import java.util.List;
 
 @Component
+@FeignClient(name = "zuul-server", url = "https://zuul.lpdm.kybox.fr")
+@RibbonClient(name = "ms-location")
 public interface MsLocationProxy {
 
     @RequestMapping(path = "${lpdm.location.name}/address/{id}",

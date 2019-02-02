@@ -5,7 +5,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
 
 @Component
-@FeignClient(name = "zuul-server", url = "http://localhost:28090")
+@FeignClient(name = "zuul-server", url = "https://zuul.lpdm.kybox.fr")
 @RibbonClient(name = "ms-order")
 public interface MsOrderProxy {
 

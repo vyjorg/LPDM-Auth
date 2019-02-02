@@ -17,6 +17,8 @@ spring:
     config:
       allow-override: true
       uri: https://config.lpdm.kybox.fr
+  main:
+    allow-bean-definition-overriding: true
   jpa:
     hibernate:
       ddl-auto: validate

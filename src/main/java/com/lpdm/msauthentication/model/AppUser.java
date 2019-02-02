@@ -2,6 +2,7 @@ package com.lpdm.msauthentication.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.lpdm.msauthentication.model.mslocation.Address;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -67,6 +68,9 @@ public class AppUser {
 
     @Column(name = "active")
     private Boolean active = true;
+
+    @Transient
+    private Address address;
 
     public int getId() {
         return id;
@@ -157,5 +161,11 @@ public class AppUser {
         this.active = active;
     }
 
+    public Address getAddress() {
+        return address;
+    }
 
+    public void setAddress(Address address) {
+        this.address = address;
+    }
 }

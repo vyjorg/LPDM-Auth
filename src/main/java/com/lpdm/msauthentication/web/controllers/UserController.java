@@ -3,10 +3,13 @@ package com.lpdm.msauthentication.web.controllers;
 import com.lpdm.msauthentication.dao.AppRoleRepository;
 import com.lpdm.msauthentication.dao.AppUserRepository;
 import com.lpdm.msauthentication.model.AppRole;
+import com.lpdm.msauthentication.model.mslocation.Address;
+import com.lpdm.msauthentication.proxies.MsLocationProxy;
 import com.lpdm.msauthentication.web.exceptions.CannotCreateUserException;
 import com.lpdm.msauthentication.web.exceptions.IncorrectPasswordException;
 import com.lpdm.msauthentication.web.exceptions.UserNotFoundException;
 import com.lpdm.msauthentication.model.AppUser;
+import feign.FeignException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +32,9 @@ public class UserController {
     @Autowired
     private AppRoleRepository appRoleRepository;
 
+    @Autowired
+    private MsLocationProxy locationProxy;
+
     @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public List<AppUser> getAllUsers(){
         return appUserRepository.findAll();
@@ -46,6 +52,8 @@ public class UserController {
     @PostMapping(value = "/login", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public AppUser login(@RequestBody AppUser user){
         AppUser DbUser = appUserRepository.findByEmail(user.getEmail());
+
+
         if (DbUser == null){
             logger.info("Pas d'utilisateur trouvé");
             throw new UserNotFoundException("Could not find any user matching this email " + user.getEmail());
@@ -94,6 +102,7 @@ public class UserController {
     @GetMapping(value = "/per_role/{id}")
     public List<AppUser>getUsersByRole(@PathVariable("id") int id){
         AppRole role = appRoleRepository.getAppRoleById(id);
+
         return appUserRepository.getAppUsersByAppRoleEquals(role);
     }
 
@@ -126,7 +135,19 @@ public class UserController {
     }
 
 
+    public void assignAddressToUSer(AppUser user){
+        Address address = null;
 
+        try {
+            address = locationProxy.findAddressById(user.getId());
+        }catch (FeignException e){
+            logger.info("L'id ne correspond à aucune adresse");
+        }
+
+        logger.info("address: " + address);
+
+        user.setAddress(address);
+    }
 
     
 }

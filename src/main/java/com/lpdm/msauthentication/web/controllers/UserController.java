@@ -46,6 +46,9 @@ public class UserController {
         AppUser appUser = appUserRepository.findById(id);
         if(appUser == null)
             throw new UserNotFoundException("Could not find any user matching this id " + id);
+
+        assignAddressToUSer(appUser);
+
         return appUser;
     }
 
@@ -59,6 +62,7 @@ public class UserController {
             throw new UserNotFoundException("Could not find any user matching this email " + user.getEmail());
 
         } else if (user.getPassword().equals(DbUser.getPassword())){
+            assignAddressToUSer(user);
             return DbUser;
         } else {
             logger.info("Mot de passe incorrect: " + user.getPassword() + " " + DbUser.getPassword());
@@ -69,6 +73,8 @@ public class UserController {
     @GetMapping(value = "/email/{email}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public AppUser getUserByEmail(@PathVariable String email){
         AppUser appUser = appUserRepository.findByEmail(email);
+        assignAddressToUSer(appUser);
+
         return appUser;
     }
 
@@ -79,6 +85,9 @@ public class UserController {
         List<AppUser> appUser = appUserRepository.findAllByNameContainingIgnoreCase(username);
         if(appUser.size() == 0)
             throw new UserNotFoundException("Could not find any user matching this username " + username);
+
+        for (AppUser user : appUser)
+            assignAddressToUSer(user);
 
         return appUser;
     }
@@ -91,6 +100,8 @@ public class UserController {
         if (appUser != null)
             throw new CannotCreateUserException("The user " + user.getEmail() + " already exists");
 
+        assignAddressToUSer(appUser);
+
         return appUserRepository.save(user);
     }
 
@@ -102,6 +113,12 @@ public class UserController {
     @GetMapping(value = "/per_role/{id}")
     public List<AppUser>getUsersByRole(@PathVariable("id") int id){
         AppRole role = appRoleRepository.getAppRoleById(id);
+        List <AppUser> users = appUserRepository.getAppUsersByAppRoleEquals(role);
+
+        if(users.size() > 0) {
+            for (AppUser user : users)
+                assignAddressToUSer(user);
+        }
 
         return appUserRepository.getAppUsersByAppRoleEquals(role);
     }
@@ -115,6 +132,7 @@ public class UserController {
             throw  new UserNotFoundException("The user id: " + user.getId() + " does not exist");
 
         user.setPassword(dbUser.getPassword());
+        assignAddressToUSer(user);
         logger.info("Modification de l'utilisateur");
         return appUserRepository.save(user);
     }
@@ -135,7 +153,7 @@ public class UserController {
     }
 
 
-    public void assignAddressToUSer(AppUser user){
+    private void assignAddressToUSer(AppUser user){
         Address address = null;
 
         try {

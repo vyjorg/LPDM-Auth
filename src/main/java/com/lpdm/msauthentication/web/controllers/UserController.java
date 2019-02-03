@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -61,7 +62,7 @@ public class UserController {
             logger.info("Pas d'utilisateur trouvé");
             throw new UserNotFoundException("Could not find any user matching this email " + user.getEmail());
 
-        } else if (user.getPassword().equals(DbUser.getPassword())){
+        } else if(BCrypt.checkpw(user.getPassword(), DbUser.getPassword())){
             assignAddressToUSer(user);
             return DbUser;
         } else {
@@ -98,10 +99,12 @@ public class UserController {
 
         AppUser appUser = appUserRepository.findByEmail(user.getEmail());
 
+        user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
+
         if (appUser != null)
             throw new CannotCreateUserException("The user " + user.getEmail() + " already exists");
-
-        assignAddressToUSer(appUser);
+        if(user.getAddressId() < 1)
+            assignAddressToUSer(appUser);
 
         return appUserRepository.save(user);
     }

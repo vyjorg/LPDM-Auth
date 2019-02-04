@@ -112,9 +112,11 @@ public class UserController {
 
         user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
 
-        if (appUser != null)
+        if (appUser != null) {
             throw new CannotCreateUserException("The user " + user.getEmail() + " already exists");
-        if(user.getAddressId() < 1)
+        }
+        logger.info("addressId" + user.getAddressId());
+        if (user.getAddressId() != 0)
             assignAddressToUSer(appUser);
 
         return appUserRepository.save(user);

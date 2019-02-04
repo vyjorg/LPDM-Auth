@@ -73,8 +73,19 @@ public class UserController {
 
     @GetMapping(value = "/email/{email}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public AppUser getUserByEmail(@PathVariable String email){
-        AppUser appUser = appUserRepository.findByEmail(email);
-        assignAddressToUSer(appUser);
+        logger.info("step 1");
+        AppUser appUser= null;
+        try {
+            logger.info("step 2");
+            appUser = appUserRepository.findByEmail(email);
+        }catch (NullPointerException e){
+            logger.info("User not found");
+            return null;
+        }
+        if(appUser != null) {
+            logger.info(appUser.toString());
+            assignAddressToUSer(appUser);
+        }
 
         return appUser;
     }

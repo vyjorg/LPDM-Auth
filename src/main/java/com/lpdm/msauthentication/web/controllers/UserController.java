@@ -111,6 +111,8 @@ public class UserController {
         AppUser appUser = appUserRepository.findByEmail(user.getEmail());
 
         user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
+        user.setActive(true);
+        user.setRegistrationDate(LocalDateTime.now());
 
         if (appUser != null) {
             throw new CannotCreateUserException("The user " + user.getEmail() + " already exists");
